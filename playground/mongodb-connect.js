@@ -31,8 +31,5 @@ mydb.collection('Users').insertOne({
     }
     console.log(JSON.stringify(result.ops, undefined, 2));
 }); */
-
-/* =========================== Users Collection End========================== */  
-
     console.log('Connected to the MongoDB Server');
 });
