@@ -1,40 +1,38 @@
 var express = require('express');
-var mongoose = require('mongoose');
-
+var bodyParser = require('body-parser');
 var app = express();
 
-mongoose.connect('mongodb://localhost:27017/TodoApp', {useNewUrlParser : true});
+var {mongoose} = require('./db/mongoose');
+var {Todos} = require('./models/todo');
 
-var Todos = mongoose.model('Todos', {
-    text : {
-        type : String,
-        required : true,
-        trim : true,
-        minlength : 1,
-    },
-    completed : {
-        type : Boolean,
-        default : false,
-    },
-    
-        completedAt : {
-            type : Number,
-            default : null,
-        }
+app.use(bodyParser.json());
+
+
+app.post('/todos', (req, res) => {
+   var todo = new Todos({
+       text : req.body.text,
+   });
+
+   todo.save().then((err, result) => {
+       if(err){
+           return res.send(err);
+       }
+       res.send(result);
+   });
 });
 
-var newTodo = new Todos({
-    text : "Can you wait a little longer for me?",
-    /* completed : false,
-    completedAt : 3, */
-});
+// var newTodo = new Todos({
+//     text : "Can you wait a little longer for me?",
+//     /* completed : false,
+//     completedAt : 3, */
+// });
 
-newTodo.save().then((err, result) => {
+/* newTodo.save().then((err, result) => {
     if(err){
         return console.log(err);
     }
     console.log(result);
-});
+}); */
 
 app.listen(3000, () => {
     console.log('Server Connected on 3000 PORT!!');
