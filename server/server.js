@@ -21,6 +21,15 @@ app.post('/todos', (req, res) => {
    });
 });
 
+app.get('/todos', (req, res) => {
+    Todos.find().then((err, result) => {
+        if(err){
+            return res.send(err);
+        }
+        res.send(result);
+    });
+});
+
 // var newTodo = new Todos({
 //     text : "Can you wait a little longer for me?",
 //     /* completed : false,
