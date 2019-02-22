@@ -40,12 +40,16 @@ app.get('/todos/:id', (req, res) => {
     }
     console.log('Id is valid'); */
 
-    Todos.findById(id).then((todo) => {
+    Todos.findById(id).then((todo, err) => {
         if(todo){
-           return console.log('Todos',todo);
+           return res.send(todo);
         }
-    }).catch((err) => {
-        console.log(err);
+        res.send(err);
+        
+    }).catch((e) => {
+        // console.log(err);
+        res.send(e);
+        
     });
 });
 // var newTodo = new Todos({
