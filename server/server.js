@@ -4,6 +4,7 @@ var app = express();
 
 var {mongoose} = require('./db/mongoose');
 var {Todos} = require('./models/todo');
+const {ObjectID} = require('mongodb');
 
 app.use(bodyParser.json());
 
@@ -30,6 +31,23 @@ app.get('/todos', (req, res) => {
     });
 });
 
+
+app.get('/todos/:id', (req, res) => {
+    var id = req.params.id;
+    console.log(id);
+   /*  if(!ObjectID.isValid(id)){
+        return console.log('Id is not valid');
+    }
+    console.log('Id is valid'); */
+
+    Todos.findById(id).then((todo) => {
+        if(todo){
+           return console.log('Todos',todo);
+        }
+    }).catch((err) => {
+        console.log(err);
+    });
+});
 // var newTodo = new Todos({
 //     text : "Can you wait a little longer for me?",
 //     /* completed : false,
