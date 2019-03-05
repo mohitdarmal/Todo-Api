@@ -5,6 +5,7 @@ var app = express();
 var {mongoose} = require('./db/mongoose');
 var {Todos} = require('./models/todo');
 const {ObjectID} = require('mongodb');
+const port = process.env.PORT || 3000;
 
 app.use(bodyParser.json());
 
@@ -65,6 +66,6 @@ app.get('/todos/:id', (req, res) => {
     console.log(result);
 }); */
 
-app.listen(3000, () => {
-    console.log('Server Connected on 3000 PORT!!');
+app.listen(port, () => {
+    console.log(`Server has started on port ${port}`);
 });
