@@ -53,6 +53,26 @@ app.get('/todos/:id', (req, res) => {
         
     });
 });
+
+
+app.delete('/todos/:id', (req, res) => {
+    var id = req.params.id;
+    
+    if(!ObjectID.isValid(id)){
+       return console.log('ID is not valid!!');
+    }
+
+    Todos.findByIdAndDelete(id).then((todo) => {
+        if(!todo){
+            res.send('There is nothing to delete');
+            console.log('There is nothing to delete');
+        }
+        res.send(todo);
+        console.log(todo);
+    }).catch((err) => {
+        console.log(err);
+    })
+});
 // var newTodo = new Todos({
 //     text : "Can you wait a little longer for me?",
 //     /* completed : false,
